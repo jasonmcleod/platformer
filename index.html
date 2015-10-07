@@ -1,0 +1,68 @@
+<html>
+<head>
+    <title></title>
+    <script src="/vendor/jquery-2.0.3.min.js" type="text/javascript"></script>
+    <script src="/vendor/phaser.2.2.2.min.js" type="text/javascript"></script>
+    <script src="/vendor/phaser.2.2.2.box2d.min.js" type="text/javascript"></script>
+    <script src="/lib/createMap.js"></script>
+    <script src='/maps/test.js'></script>
+</head>
+<body>
+</html>
+    <script>
+
+        var TILE_SIZE = 32;
+        var sprites = [];
+        var cursors, wasd, player;
+        var canJump = true;
+        var game = new Phaser.Game(TILE_SIZE*map[0].length, TILE_SIZE*map.length, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create, render: render, update: update });
+
+        var createPlayer = function(options) {
+            options = options || {x:10,y:10};
+            player = {
+                //body:game.physics.box2d.createCircle(48, 560, 16)
+                sprite:game.add.sprite(options.x * TILE_SIZE, options.y * TILE_SIZE, 'ball')
+            };
+            game.physics.box2d.enable(player.sprite);
+            player.sprite.body.fixedRotation = true;
+        };
+
+        function preload() {
+            game.load.image('platform', 'sprites/platform.png');
+            game.load.image('ball', 'sprites/shinyball.png');
+            game.load.image('block', 'sprites/block.png');
+        }
+
+        function create() {
+            game.physics.startSystem(Phaser.Physics.BOX2D);
+            game.physics.box2d.gravity.y = 500;
+
+            var playerCoordinates = createMap();
+            createPlayer(playerCoordinates);
+
+            cursors = game.input.keyboard.createCursorKeys();
+            wasd = { up: game.input.keyboard.addKey(Phaser.Keyboard.W), down: game.input.keyboard.addKey(Phaser.Keyboard.S), left: game.input.keyboard.addKey(Phaser.Keyboard.A),right: game.input.keyboard.addKey(Phaser.Keyboard.D),};
+        }
+
+        function update() {
+            if(cursors.left.isDown || wasd.left.isDown) {
+                player.sprite.body.moveLeft(400);
+            }
+            if(cursors.right.isDown || wasd.right.isDown) {
+                player.sprite.body.moveRight(400);
+            }
+            if(cursors.up.isDown || wasd.up.isDown) {
+                player.sprite.body.moveUp(400);
+            }
+            if(cursors.down.isDown || wasd.down.isDown) {
+                player.sprite.body.moveDown(400);
+            }
+        }
+
+        function render() {
+            game.debug.box2dWorld();
+        }
+
+    </script>
+</body>
+</html>
