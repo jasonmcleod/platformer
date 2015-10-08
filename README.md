@@ -20,6 +20,7 @@ I use `python -m SimpleHTTPServer` to serve it for now.
 - You can get stuck on each tile as you move left and right
 - You can jump at any time, even mid jump
 - Debug mode is required in order to see anything (since we have no graphics)
+- Movement is far from figured out, it works.. but doesnt feel right at all
 
 
 

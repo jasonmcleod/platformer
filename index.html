@@ -20,11 +20,12 @@
         var createPlayer = function(options) {
             options = options || {x:10,y:10};
             player = {
-                //body:game.physics.box2d.createCircle(48, 560, 16)
+                // body:game.physics.box2d.createCircle(48, 560, 16)
                 sprite:game.add.sprite(options.x * TILE_SIZE, options.y * TILE_SIZE, 'ball')
             };
             game.physics.box2d.enable(player.sprite);
             player.sprite.body.fixedRotation = true;
+            player.sprite.body.setCircle(16);
         };
 
         function preload() {
